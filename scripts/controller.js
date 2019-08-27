@@ -1,8 +1,8 @@
 // Create a client instance
-console.log("helloworld");
-// var client;
 var btn_connect = document.getElementById("connect-btn");
 var btn_publish = document.getElementById("publish-btn");
+var pub_input = document.getElementById("input-publish");
+
 
 client = new Paho.Client("broker.hivemq.com", 8000, "clientId");
 
@@ -38,15 +38,16 @@ function onMessageArrived(message) {
 //add Event to button if click
 btn_connect.addEventListener('click',function(e){
     e.preventDefault();
-    console.log("connect");
     // connect the client
     client.connect({onSuccess:onConnect});
+    console.log("Successfully Connected");
 })
 
+//Submit Topic when click publish button
 btn_publish.addEventListener('click',function(e){
     e.preventDefault();
-    console.log("publish");
-    message = new Paho.Message("Hello");
+    message = new Paho.Message(pub_input.value);
     message.destinationName = "World";
     client.send(message);
+    console.log("Successfully Published");
 })
